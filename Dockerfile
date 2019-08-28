@@ -7,6 +7,7 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.lis
 RUN apt-get update -yq
 RUN apt-get install -y yarn
 RUN yarn install --check-files
+RUN gem install bundler
 COPY Gemfile /transervicos/Gemfile
 COPY Gemfile.lock /transervicos/Gemfile.lock
 RUN bundle install
