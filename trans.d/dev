@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+# vim: ft=sh
+
+SUBCOMMAND_DESC="Inicia o projeto em dev"
+SUBCOMMAND_HELP=$(cat <<EOH
+Usage ${MAIN_COMMAND} ${SUBCOMMAND} [build] [start] [build-start]
+
+build Constroi ambiente de desenvolvimento do transervicos.
+start Inicia applicacao transervicos no ambiente de desenvolvimento.
+build-start Constroi o ambiente de desenvolvimento e inicia a aplicacao transervicos.
+
+EOH
+)
+
+function build() {
+  docker-compose build
+}
+
+function build-start() {
+  docker-compose up --build
+  docker-compose run web rake db:create
+  docker-compose run web rake db:migrate
+}
+
+function start() {
+  #docker-compose up
+}
+
+function restart() {
+  #docker-compose-restart(){
+	#docker-compose stop $@
+	#docker-compose rm -f -v $@
+	#docker-compose create --force-recreate $@
+	#docker-compose start $@
+}
+
+is_help_mode "${@}" && return
+
+case ${1} in
+  build)
+    build
+    ;;
+  start)
+    start
+    ;;
+  build-start)
+    build
+    start
+  ;;
+
+esac
