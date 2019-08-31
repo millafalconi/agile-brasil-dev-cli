@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # vim: ft=sh
 
-SUBCOMMAND_DESC="Inicia o projeto em dev"
+SUBCOMMAND_DESC="Cria, configura e inicia o transervicos em dev"
 SUBCOMMAND_HELP=$(cat <<EOH
 Usage ${MAIN_COMMAND} ${SUBCOMMAND} [build] [start] [build-start]
 
 build Constroi ambiente de desenvolvimento do transervicos.
-start Inicia applicacao transervicos no ambiente de desenvolvimento.
+start Inicia aplicacao transervicos no ambiente de desenvolvimento.
 build-start Constroi o ambiente de desenvolvimento e inicia a aplicacao transervicos.
 
 EOH
