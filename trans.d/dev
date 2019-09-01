@@ -3,20 +3,17 @@
 
 SUBCOMMAND_DESC="Cria, configura e inicia o transervicos em dev"
 SUBCOMMAND_HELP=$(cat <<EOH
-Usage ${MAIN_COMMAND} ${SUBCOMMAND} [init] [start] [build-start]
+Usage ${MAIN_COMMAND} ${SUBCOMMAND} [init] [start] [stop] [clean_data] [db_migrate] [goto]
 
-build Constroi ambiente de dev do transervicos
-start Inicia app transervicos em dev
-init  Constroi e configura ambiente de dev; e inicia a app
-stop  Para a app em dev
-clean_db Limpa os dados do banco de dados do transervicos
+init          Constroi e configura ambiente de dev; e inicia a app
+start         Inicia app transervicos em dev
+stop          Para a app em dev
+clean_data    Limpa os dados do banco de dados do transervicos
+db_migrate    Roda migracoes do banco de dados
+goto          Abre app transervicos em dev
 
 EOH
 )
-
-function build() {
-  docker-compose up --no-start
-}
 
 function start() {
   docker-compose start
@@ -24,40 +21,29 @@ function start() {
 
 function init() {
   docker-compose up --build -d
-  docker-compose run web bash -c "rake db:create && rake db:migrate"
+  db_migrate
 }
 
 function stop() {
-  docker-compose stop $@
-  #docker-compose rm -f -v $@
+  docker-compose stop ${1}
 }
 
-function clean_db() {
+function clean_db_data() {
   stop db
   docker volume rm transervicos_db_data
 }
 
 function goto() {
-  # db_container="transervicos_db_1"
-  # host="db"
-  # shift
-  # cmd="open http://localhost:3000"
-
-  # until docker exec -it ${db_container} psql -h ${host} -U "postgres" -p -c '\q'; do
-  #   >&2 echo "Postgres is unavailable - sleeping"
-  #   sleep 1
-  # done
-  # >&2 echo "Postgres is up - going to dev env"
-  # exec $cmd
   open http://localhost:3000
+}
+
+function db_migrate() {
+  docker-compose run web bash -c "rake db:create && rake db:migrate"
 }
 
 is_help_mode "${@}" && return
 
 case ${1} in
-  build)
-    build
-    ;;
   start)
     start
     ;;
@@ -67,8 +53,11 @@ case ${1} in
   stop)
     stop
     ;;
-  clean_db)
-    clean_db
+  clean_data)
+    clean_data
+    ;;
+  db_migrate)
+    db_migrate
     ;;
   goto)
     goto
