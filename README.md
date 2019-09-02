@@ -1,24 +1,21 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+###DEV-CLI
+This application has a Development Command Line Interface that automates a few tasks:
 
-Things you may want to cover:
+`./trans
+`
 
-* Ruby version
+### Build, Configure and Start Application on local dev environment:
+remove the .example from the database.yml.example on the /config folder and then run:
 
-* System dependencies
+`./trans init`
 
-* Configuration
+### Databse Migration:
+When first running the application you need to run the db migration
+`./trans db_migrate`
 
-* Database creation
+### Start Application on local dev environment:
+remove the .example from the database.yml.example on the /config folder and then run:
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+`./trans start`
