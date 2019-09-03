@@ -54,7 +54,7 @@ case ${1} in
     stop
     ;;
   clean_data)
-    clean_data
+    clean_db_data
     ;;
   db_migrate)
     db_migrate
