@@ -1,49 +1,54 @@
 #!/usr/bin/env bash
 # vim: ft=sh
 
-SUBCOMMAND_DESC="Listar URLs do projeto"
+SUBCOMMAND_DESC="Lista de URLs importantes"
 SUBCOMMAND_HELP=$(cat <<EOH
-Usage ${MAIN_COMMAND} ${SUBCOMMAND} [env] [all]
 
-dev     Informa URL para transervicos em dev
-ci      Informa URL para pipeline
-board   Informa URL para o board do projeto 
-prod    Informa URL para transervicos em pro
-all     Lista todas URLs cadastradas
+all             Lista todas URLs e aliases.
+goto [ALIAS]    Executa 'open URL', no OSX vai
+                abrir o seu browser.
+show [ALIAS]    Informa URL para [ALIAS].
+[ALIAS]         Shortcut. Mesmo que show [ALIAS].
 
 EOH
 )
 SOLUTION_DESC="Respostas da CLI para: ${SUBCOMMAND_DESC}"
 
-DEV="http://localhost:3000"
-CI="https://gitlab.com/juuh42dias/transervicos/pipelines"
-BOARD="https://gitlab.com/juuh42dias/transervicos/-/boards"
-PROD="http://www.transervicos.org/"
+declare -A "list"
+list[dev]='http://localhost:3000'
+list[ci]='https://gitlab.com/juuh42dias/transervicos/pipelines'
+list[board]='https://gitlab.com/juuh42dias/transervicos/-/boards'
+list[prod]='http://www.transervicos.org/'
 
-function list_all_url() {
-    echo "DEV URL       " $DEV
-    echo "-"
-    echo "CI URL:       " $CI
-    echo "-"
-    echo "BOARD URL:    " $BOARD
-    echo "-"
-    echo "PROD URL:     " $PROD
+function _show_all() {
+  in_cyan "Current URL list:\n"
+  printf "%-20s %s\n" "ALIAS" "URL"
+  for name in "${!list[@]}"; do
+    printf "%-20s %s\n" ${name} ${list[${name}]}
+  done | sort
 }
 
 case ${1} in
-    dev)
-        echo $DEV
-        ;;
-    ci)
-        echo $CI
-        ;;
-    board)
-        echo $BOARD
-        ;;
-    prod)
-        echo $PROD
-        ;;
+    goto)
+        local alias=${2}
+        [[ -z ${alias} ]] && in_red "no alias given" && _show_all && return
+        log "Alias given '${2}'"
+        [[ -n ${list[${alias}]} ]] && open ${list[${alias}]} || _show_all
+    ;;
     all)
-        list_all_url
-        ;;
+        _show_all
+    ;;
+    show)
+        local alias=${2}
+        [[ -z ${alias} ]] && in_red "no alias given" && _show_all && return
+        log "Alias given '${alias}'"
+        log "Showing URL for '${alias}'"
+        [[ -n ${list[${alias}]} ]] && printf "%-20s %s\n" "ALIAS" "URL" && printf "%-20s %s\n" ${alias} ${list[${alias}]} || (in_red "no URL found for '${alias}'" && _show_all)
+    ;;
+    *)
+        local alias=${1}
+        [[ -z ${alias} ]] && return
+        log "Alias given '${alias}'"
+        [[ -n ${list[${alias}]} ]] && printf "%-20s %s\n" "ALIAS" "URL" && printf "%-20s %s\n" ${alias} ${list[${alias}]}
+    ;;
 esac
