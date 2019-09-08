@@ -91,7 +91,7 @@ function checkin_dance() {
   case $is_green in
     y|Y)
       log "CI server status is green"
-      in_cyan "proceeding to STEP 4: integrate the code"
+      in_cyan "proceeding to STEP 4..."
       ;;
     n|N)
       log "CI server status is NOT green"
@@ -113,9 +113,11 @@ function checkin_dance() {
   echo
   git push
   if [[ $? -ne 0 ]]; then
-    warn "someone else integrated their code before your."
+    echo
+    warn "someone else integrated their code before you."
     error "please start over."
   fi
+  echo
   in_green "all set! checkin dance succeeded!"
 }
 
