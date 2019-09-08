@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 # vim: ft=sh
 
-SUBCOMMAND_DESC="Executar os testes da aplicacao transervicos"
+SOLUTION_DESC="CLI solution script for 'test'"
+SUBCOMMAND_DESC="Run application tests"
 SUBCOMMAND_HELP=$(cat <<EOH
 
-all           Executa todos os testes da App, 
-              mais analise estatica
+all           Run all application tests. Including
+              static analysis.
 
-style         Executa analise estática de código 
-              ruby com Rubocop
+style         Run static analysis for Ruby
+              with Rubocop.
 
 EOH
 )
-SOLUTION_DESC="Respostas da CLI para: ${SUBCOMMAND_DESC}"
 
 function all() {
   docker-compose run web bash -c "rubocop && rspec spec"
