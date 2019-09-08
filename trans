@@ -44,11 +44,13 @@ fi
 
 function _list_commands() {
   cat <<EOU
-  usage: ${MAIN_COMMAND} [-h|-?|--help|help] [-l] [--version] [SUBCOMMAND]
 
-  -h|-?|--help|help            Show this help message
-  -l                           List available libraries
-  --version                    Display current version
+  -h|-?|--help|help             Show this help message.
+  -l                            List available libraries.
+  -s                            List available solution
+                                scripts.
+  -es                           Run solution scripts.
+  --version                     Display current version.
 
   Subcommands available ('${MAIN_COMMAND} SUBCOMMAND' for usage):
 
@@ -147,7 +149,7 @@ case ${_arg_subcmd} in
     log 'showing available libs'
     _list_libraries
   ;;
-  -s|--solutions)
+  -s)
     log 'showing available solved challenges'
     _list_solutions
   ;;
