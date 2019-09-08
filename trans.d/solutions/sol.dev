@@ -56,7 +56,7 @@ function db_migrate() {
 function run_all_tests() {
   in_cyan "RUNNING: all tests"
   echo
-  docker-compose run --rm web bash -c 'rubocop && rspec spec; exit 1'
+  docker-compose run --rm web bash -c 'rubocop && rspec spec; exit $?'
 }
 
 function checkin_dance() {
@@ -81,7 +81,6 @@ function checkin_dance() {
     warn "there are failing tests. you cannot proceed."
     warn "fix the tests and try again"
     in_cyan "aborting checkin dance"
-    return
   fi
   in_green "all tests passing"
   echo
