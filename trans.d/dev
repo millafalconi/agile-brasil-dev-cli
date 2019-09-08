@@ -1,21 +1,23 @@
 #!/usr/bin/env bash
 # vim: ft=sh
 
-SUBCOMMAND_DESC="Criar, configurar e iniciar o transervicos em dev"
+SUBCOMMAND_DESC="Init and work with local development environment"
 SUBCOMMAND_HELP=$(cat <<EOH
 
-init                  Constroi e configura ambiente de dev; 
-                      e inicia a app.
+init                  Init, configure the local dev environment;
+                      and start the app.
                       
-start                 Inicia app transervicos em dev.
+start                 Start transervicos in local dev environment.
 
-stop [SERVER]         Para a app em dev. 
+stop [SERVER]         Stop transervicos in local dev environment. 
 
-clean_data            Limpa os dados do transervicos em dev.
+clean_data            Clean all data in local dev environment.
 
-db_migrate            Roda migracoes do banco de dados.
+db_migrate            Run DB migration.
 
-goto                  Abre app transervicos em dev.
+goto                  Open transervicos app in localhost. 
+                      Will trigger 'open URL', in OSX this
+                      will fire up your browser.
 
 EOH
 )
