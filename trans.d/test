@@ -4,30 +4,40 @@
 SUBCOMMAND_DESC="Shortcuts to run tests"
 SUBCOMMAND_HELP=$(cat <<EOH
 
+unit          Run all unit tests.
+
 all           Run all application tests. Including
               static analysis.
 
 style         Run static analysis for Ruby
               with Rubocop.
 
+
 EOH
 )
 
-function all() {
-  docker-compose run web bash -c "rubocop && rspec spec"
+function run_all() {
+  error "not implemented"
 }
 
-function style() {
-  docker-compose run web bash -c "rubocop"
+function run_rubocop() {
+  error "not implemented"
+}
+
+function run_unit() {
+  error "not implemented"
 }
 
 is_help_mode "${@}" && return
 
 case ${1} in
+  unit)
+    run_unit
+    ;;
   all)
-    all
+    run_all
     ;;
   style)
-    style
+    run_rubocop
     ;;
 esac
