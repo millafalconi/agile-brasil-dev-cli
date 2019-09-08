@@ -1,113 +1,91 @@
 #!/usr/bin/env bash
 # vim: ft=sh
 
-SUBCOMMAND_DESC="Setup do projeto transervicos"
+SUBCOMMAND_DESC="Project setup"
 SUBCOMMAND_HELP=$(cat <<EOH
 
-check           Verifica quais dependências existem e 
-                versões mínimas.
+check           Check all required software.
 
-install         Instala dependências necessárias e 
-                não instaladas.
+install         Install all required and not 
+                installed software.
 
 EOH
 )
 
-function msg_installed() {
-  in_green "OK: "${1}" instalado"
-}
-
-function msg_not_installed() {
-  in_red "NOK: "${1}" necessário. "${1}" não instalado"
-}
-
-function is_installed() {
-  [ -x "$(command -v ${1})" ]
-}
-
-function check() {
-  if is_installed ${1}; then
-    msg_installed ${1}
-  else
-    msg_not_installed ${1}
-  fi
+function check_for() {
+  log "arguments '${*}'"
+  log "checking if '${1}' exists"
+  [[ -x "$(command -v ${1})" ]] && in_yellow "'${1}' found\n\n" || in_red "error: dependency '${1}' not found\n\n"
 }
 
 function install() {
   local to_install=${1}
+  log "dependency given '${to_install}'"
   case $to_install in
     docker)
-      in_yellow "OK: instalando $to_install via apk..."
-      apk add $to_install
+      in_cyan "installing dependency '${to_install}' via apk..."
+      apk add ${to_install}
+      if [[ $? -ne 0 ]]; then
+        error "dependency '${to_install}' not installed"
+      else
+        in_green "dependency '${to_install}' installed"
+      fi
       ;;
     *)
+      log "dependency '${to_install}' is not valid"
+      error "could not install dependency '${to_install}'"
       ;;
   esac
 }
 
-function parse_choice() {
+function parse() {
   local choice=${1}
   case $choice in
     y|Y)
-      in_yellow "OK: instalação confirmada."
+      log "choice given '${choice}'"
+      log "you choose to proceed with installation"
+      in_cyan "proceeding with installation"
       ;;
     n|N)
-      in_yellow "NOK: instalação não confirmada."
+      log "choice given '${choice}'"
+      log "you choose not to proceed with installation"
+      in_cyan "aborting installation"
       return -1
       ;;
     *)
-      in_red "NOK: $choice não é uma opção válida."
+      log "args: '${*}'"
+      error "'${choice}' not a valid option"
       exit;;
   esac
 }
 
-function verify_instalation() {
-  local dependency=${1}
-  if is_installed $dependency; then
-    in_green "OK: $dependency instalado com sucesso!"
-  else
-    in_red "NOK: $dependency não instalado"
-  fi
-}
-
-function confirm_installation() {
-  read -p "Confirma instalação? (y/n) " choice
-  parse_choice ${choice}
-}
-
-function msg_instalation_not_confirmed() {
-  in_yellow "NOK: $to_be_installed necessário, mas não instalado"
-  in_yellow "NOK: encerrando setup de: $to_be_installed"
+function proceed() {
+  in_cyan "Proceed to install (Y/N)?"
+  read choice
+  parse ${choice}
 }
 
 function install_if_missing() {
-  local to_be_installed=${1}
-
-  if is_installed $to_be_installed; then
-    msg_installed $to_be_installed
+  in_cyan "checking if '${1}' is indeed missing"
+  if [[ -x "$(command -v ${1})" ]]; then
+    in_green "'${1}' found. "
+    in_cyan "no further action required. exiting."
     return
   fi
 
-  in_yellow "NOK: $to_be_installed necessário e não encontrado"
-  in_yellow "$to_be_installed será instalado..."
+  in_red "error: dependency '${1}' not found\n"
+  log "'${1}' not found"
+  in_cyan "'${1}' is required and should be installed.\n\n" && proceed
 
-  confirm_installation
-
-  if [[ $? != 0 ]]; then
-    msg_instalation_not_confirmed
-    return
-  fi
-
-  install $to_be_installed
-  verify_instalation $to_be_installed
+  [[ $? != 0 ]] && return || install ${1}
 }
 
 function check_setup() {
-  check "docker"
+  check_for "docker"
 }
 
 function install_all() {
-  in_yellow "Instalando dependências necessárias para o projeto: transervicos"
+  in_cyan "installing all required software for 'transervicos'"
   install_if_missing "docker"
 }
 
