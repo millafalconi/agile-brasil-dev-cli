@@ -4,6 +4,7 @@ MAIN_COMMAND=$(basename ${0})
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}" )" > /dev/null && pwd)"
 PROJECTS_DIR="$(cd ${ROOT_DIR}/.. && pwd)"
 SUBCOMMANDS_DIR=${ROOT_DIR}/${MAIN_COMMAND}.d
+SOLUTIONS_DIR=${ROOT_DIR}/${MAIN_COMMAND}.d/solutions
 
 function _color()     { tput -Txterm setaf ${1}; echo -e ${2}; tput -Txterm sgr0; }
 function in_red()     { _color 1 "${1}"; } # use for failures
@@ -74,6 +75,17 @@ function _list_libraries() {
   exit 1
 }
 
+function _list_solutions() {
+  echo
+  echo "Solved challenges available ('${MAIN_COMMAND} SOLUTIONS' for more information):"
+  echo
+  for i in $(export LC_COLLATE=C; ls ${SOLUTIONS_DIR}/* | grep -E '/sol.[^[:blank:]]+$' | sort); do
+    echo -e "  $(basename ${i}):\t\t$(source "${i}"; echo ${SOLUTION_DESC})"
+  done
+  echo
+  exit 1
+}
+
 function is_help_mode() {
   [[ -z "${@}" || "${1}" == 'help' ]]
 }
@@ -128,6 +140,10 @@ case ${_arg_subcmd} in
   -l)
     log 'showing available libs'
     _list_libraries
+  ;;
+  -s|--solutions)
+    log 'showing availabled solved challenges'
+    _list_solutions
   ;;
   help|-h|-?|--help|'')
     log 'help or no argument was given'

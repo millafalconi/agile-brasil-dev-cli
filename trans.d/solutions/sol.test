@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# vim: ft=sh
+
+SUBCOMMAND_DESC="Executar os testes da aplicacao transervicos"
+SUBCOMMAND_HELP=$(cat <<EOH
+Usage ${MAIN_COMMAND} ${SUBCOMMAND} [all] [style]
+
+all           Roda Rubocop e Roda todos os testes da App
+style         Roda Rubocop - ferramenta de analise estática de código ruby
+
+EOH
+)
+SOLUTION_DESC="Respostas da CLI para: ${SUBCOMMAND_DESC}"
+
+function all() {
+  docker-compose run web bash -c "rubocop && rspec spec"
+}
+
+function style() {
+  docker-compose run web bash -c "rubocop"
+}
+
+is_help_mode "${@}" && return
+
+case ${1} in
+  all)
+    all
+    ;;
+  style)
+    style
+    ;;
+esac

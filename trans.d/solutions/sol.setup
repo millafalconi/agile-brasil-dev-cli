@@ -1,0 +1,122 @@
+#!/usr/bin/env bash
+# vim: ft=sh
+
+SUBCOMMAND_DESC="Setup do projeto transervicos"
+SUBCOMMAND_HELP=$(cat <<EOH
+Usage ${MAIN_COMMAND} ${SUBCOMMAND} [check] [install]
+
+check   Verifica quais dependências existem e versões mínimas.
+install Instala dependências necessárias e não instaladas.
+
+EOH
+)
+SOLUTION_DESC="Respostas da CLI para: ${SUBCOMMAND_DESC}"
+
+function msg_installed() {
+  in_green "OK: "${1}" instalado"
+}
+
+function msg_not_installed() {
+  in_red "NOK: "${1}" necessário. "${1}" não instalado"
+}
+
+function is_installed() {
+  [ -x "$(command -v ${1})" ]
+}
+
+function check() {
+  if is_installed ${1}; then
+    msg_installed ${1}
+  else
+    msg_not_installed ${1}
+  fi
+}
+
+function install() {
+  local to_install=${1}
+  case $to_install in
+    docker)
+      in_yellow "OK: instalando $to_install via apk..."
+      apk add $to_install
+      ;;
+    *)
+      ;;
+  esac
+}
+
+function parse_choice() {
+  local choice=${1}
+  case $choice in
+    y|Y)
+      in_yellow "OK: instalação confirmada."
+      ;;
+    n|N)
+      in_yellow "NOK: instalação não confirmada."
+      return -1
+      ;;
+    *)
+      in_red "NOK: $choice não é uma opção válida."
+      exit;;
+  esac
+}
+
+function verify_instalation() {
+  local dependency=${1}
+  if is_installed $dependency; then
+    in_green "OK: $dependency instalado com sucesso!"
+  else
+    in_red "NOK: $dependency não instalado"
+  fi
+}
+
+function confirm_installation() {
+  read -p "Confirma instalação? (y/n) " choice
+  parse_choice ${choice}
+}
+
+function msg_instalation_not_confirmed() {
+  in_yellow "NOK: $to_be_installed necessário, mas não instalado"
+  in_yellow "NOK: encerrando setup de: $to_be_installed"
+}
+
+function install_if_missing() {
+  local to_be_installed=${1}
+
+  if is_installed $to_be_installed; then
+    msg_installed $to_be_installed
+    return
+  fi
+
+  in_yellow "NOK: $to_be_installed necessário e não encontrado"
+  in_yellow "$to_be_installed será instalado..."
+
+  confirm_installation
+
+  if [[ $? != 0 ]]; then
+    msg_instalation_not_confirmed
+    return
+  fi
+
+  install $to_be_installed
+  verify_instalation $to_be_installed
+}
+
+function check_setup() {
+  check "docker"
+}
+
+function install_all() {
+  in_yellow "Instalando dependências necessárias para o projeto: transervicos"
+  install_if_missing "docker"
+}
+
+is_help_mode "${@}" && return
+
+case ${1} in
+  check)
+    check_setup
+    ;;
+  install)
+    install_all
+  ;;
+esac

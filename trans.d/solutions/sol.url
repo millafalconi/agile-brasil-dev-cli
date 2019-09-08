@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+# vim: ft=sh
+
+SUBCOMMAND_DESC="Listar URLs do projeto"
+SUBCOMMAND_HELP=$(cat <<EOH
+Usage ${MAIN_COMMAND} ${SUBCOMMAND} [env] [all]
+
+dev     Informa URL para transervicos em dev
+ci      Informa URL para pipeline
+board   Informa URL para o board do projeto 
+prod    Informa URL para transervicos em pro
+all     Lista todas URLs cadastradas
+
+EOH
+)
+SOLUTION_DESC="Respostas da CLI para: ${SUBCOMMAND_DESC}"
+
+DEV="http://localhost:3000"
+CI="https://gitlab.com/juuh42dias/transervicos/pipelines"
+BOARD="https://gitlab.com/juuh42dias/transervicos/-/boards"
+PROD="http://www.transervicos.org/"
+
+function list_all_url() {
+    echo "DEV URL       " $DEV
+    echo "-"
+    echo "CI URL:       " $CI
+    echo "-"
+    echo "BOARD URL:    " $BOARD
+    echo "-"
+    echo "PROD URL:     " $PROD
+}
+
+case ${1} in
+    dev)
+        echo $DEV
+        ;;
+    ci)
+        echo $CI
+        ;;
+    board)
+        echo $BOARD
+        ;;
+    prod)
+        echo $PROD
+        ;;
+    all)
+        list_all_url
+        ;;
+esac
