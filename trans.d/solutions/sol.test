@@ -2,7 +2,7 @@
 # vim: ft=sh
 
 SOLUTION_DESC="CLI solution script for 'test'"
-SUBCOMMAND_DESC="Run application tests"
+SUBCOMMAND_DESC="Shortcuts to run tests"
 SUBCOMMAND_HELP=$(cat <<EOH
 
 all           Run all application tests. Including

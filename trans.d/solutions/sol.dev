@@ -2,7 +2,7 @@
 # vim: ft=sh
 
 SOLUTION_DESC="CLI solution script for 'dev'"
-SUBCOMMAND_DESC="Init and work with local development environment"
+SUBCOMMAND_DESC="Shortcuts to handle local dev env"
 SUBCOMMAND_HELP=$(cat <<EOH
 
 init                  Init, configure the local dev environment;
