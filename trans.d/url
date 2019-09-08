@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 # vim: ft=sh
 
-SUBCOMMAND_DESC="Lista de URLs importantes"
+SUBCOMMAND_DESC="List relevant URLs"
 SUBCOMMAND_HELP=$(cat <<EOH
 
-all             Lista todas URLs e aliases.
+all             List all URLs and aliases.
 
-goto [ALIAS]    Executa 'open URL', no OSX vai
-                abrir o seu browser.
+goto [ALIAS]    Will trigger 'open URL', in OSX this
+                will fire up your browser.
 
-show [ALIAS]    Informa URL para [ALIAS].
+show [ALIAS]    List URL for an specific [ALIAS].
 
-[ALIAS]         Shortcut. Mesmo que show [ALIAS].
+[ALIAS]         Just a shortcut. Same as 'show [ALIAS]'.
 
 EOH
 )
@@ -51,6 +51,7 @@ case ${1} in
         local alias=${1}
         [[ -z ${alias} ]] && return
         log "Alias given '${alias}'"
+        log "Showing URL for '${alias}'"
         [[ -n ${list[${alias}]} ]] && printf "%-20s %s\n" "ALIAS" "URL" && printf "%-20s %s\n" ${alias} ${list[${alias}]}
     ;;
 esac
