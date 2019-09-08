@@ -81,12 +81,11 @@ function install_if_missing() {
 }
 
 function check_setup() {
-  check_for "docker"
+  error "not implemented."
 }
 
 function install_all() {
-  in_cyan "installing all required software for 'transervicos'"
-  install_if_missing "docker"
+  error "not implemented."
 }
 
 is_help_mode "${@}" && return
