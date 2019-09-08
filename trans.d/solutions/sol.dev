@@ -87,7 +87,8 @@ function checkin_dance() {
       log "CI server status is NOT green"
       warn "CI server status is NOT green"
       warn "you should NOT integrate your code"
-      warn "go figure out why the CI is failing"
+      warn "go figure out why the CI is failing and fix it before proceeding"
+      in_cyan "aborting checkin dance"
       return
       ;;
     *)
