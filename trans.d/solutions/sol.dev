@@ -57,6 +57,13 @@ function run_all_tests() {
   in_cyan "RUNNING: all tests"
   echo
   docker-compose run --rm web bash -c 'rubocop && rspec spec; exit $?'
+  if [[ $? -ne 0 ]]; then
+    warn "there are failing tests. you cannot proceed."
+    warn "fix the tests and try again"
+    in_cyan "aborting checkin dance"
+  fi
+  in_green "all tests passed"
+  echo
 }
 
 function checkin_dance() {
@@ -77,13 +84,6 @@ function checkin_dance() {
   in_cyan "STEP 2: run all tests"
   run_all_tests
 
-  if [[ $? -ne 0 ]]; then
-    warn "there are failing tests. you cannot proceed."
-    warn "fix the tests and try again"
-    in_cyan "aborting checkin dance"
-  fi
-  in_green "all tests passing"
-  echo
   in_cyan "STEP 3: Check the CI server status"
   in_cyan "Is the CI status green? (Y/N)"
   read is_green
@@ -98,6 +98,7 @@ function checkin_dance() {
       warn "CI server status is NOT green"
       warn "you should NOT integrate your code"
       warn "go figure out why the CI is failing and fix it before proceeding"
+      echo
       in_cyan "aborting checkin dance"
       return
       ;;
