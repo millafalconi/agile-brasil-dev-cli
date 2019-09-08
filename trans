@@ -142,7 +142,7 @@ case ${_arg_subcmd} in
     _list_libraries
   ;;
   -s|--solutions)
-    log 'showing availabled solved challenges'
+    log 'showing available solved challenges'
     _list_solutions
   ;;
   help|-h|-?|--help|'')
