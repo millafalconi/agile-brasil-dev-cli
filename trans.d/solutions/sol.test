@@ -3,10 +3,12 @@
 
 SUBCOMMAND_DESC="Executar os testes da aplicacao transervicos"
 SUBCOMMAND_HELP=$(cat <<EOH
-Usage ${MAIN_COMMAND} ${SUBCOMMAND} [all] [style]
 
-all           Roda Rubocop e Roda todos os testes da App
-style         Roda Rubocop - ferramenta de analise estática de código ruby
+all           Executa todos os testes da App, 
+              mais analise estatica
+
+style         Executa analise estática de código 
+              ruby com Rubocop
 
 EOH
 )

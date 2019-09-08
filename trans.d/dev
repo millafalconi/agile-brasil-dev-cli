@@ -3,14 +3,19 @@
 
 SUBCOMMAND_DESC="Criar, configurar e iniciar o transervicos em dev"
 SUBCOMMAND_HELP=$(cat <<EOH
-Usage ${MAIN_COMMAND} ${SUBCOMMAND} [init] [start] [stop] [clean_data] [db_migrate] [goto]
 
-init          Constroi e configura ambiente de dev; e inicia a app
-start         Inicia app transervicos em dev
-stop          Para a app em dev
-clean_data    Limpa os dados do banco de dados do transervicos
-db_migrate    Roda migracoes do banco de dados
-goto          Abre app transervicos em dev
+init                  Constroi e configura ambiente de dev; 
+                      e inicia a app.
+                      
+start                 Inicia app transervicos em dev.
+
+stop [SERVER]         Para a app em dev. 
+
+clean_data            Limpa os dados do transervicos em dev.
+
+db_migrate            Roda migracoes do banco de dados.
+
+goto                  Abre app transervicos em dev.
 
 EOH
 )

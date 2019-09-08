@@ -5,9 +5,12 @@ SUBCOMMAND_DESC="Lista de URLs importantes"
 SUBCOMMAND_HELP=$(cat <<EOH
 
 all             Lista todas URLs e aliases.
+
 goto [ALIAS]    Executa 'open URL', no OSX vai
                 abrir o seu browser.
+
 show [ALIAS]    Informa URL para [ALIAS].
+
 [ALIAS]         Shortcut. Mesmo que show [ALIAS].
 
 EOH

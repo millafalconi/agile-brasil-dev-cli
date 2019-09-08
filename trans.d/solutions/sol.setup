@@ -3,10 +3,12 @@
 
 SUBCOMMAND_DESC="Setup do projeto transervicos"
 SUBCOMMAND_HELP=$(cat <<EOH
-Usage ${MAIN_COMMAND} ${SUBCOMMAND} [check] [install]
 
-check   Verifica quais dependências existem e versões mínimas.
-install Instala dependências necessárias e não instaladas.
+check           Verifica quais dependências existem e 
+                versões mínimas.
+
+install         Instala dependências necessárias e 
+                não instaladas.
 
 EOH
 )
