@@ -69,7 +69,7 @@ function proceed() {
 function install_if_missing() {
   in_cyan "checking if '${1}' is indeed missing"
   if [[ -x "$(command -v ${1})" ]]; then
-    in_green "'${1}' found. "
+    in_yellow "'${1}' found. "
     in_cyan "no further action required. exiting."
     return
   fi
