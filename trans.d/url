@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # vim: ft=sh
 
-SUBCOMMAND_DESC="Encontre as URLs do projeto"
+SUBCOMMAND_DESC="Listar URLs do projeto"
 SUBCOMMAND_HELP=$(cat <<EOH
 Usage ${MAIN_COMMAND} ${SUBCOMMAND} [env] [all]
 

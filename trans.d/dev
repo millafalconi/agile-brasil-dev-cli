@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # vim: ft=sh
 
-SUBCOMMAND_DESC="Cria, configura e inicia o transervicos em dev"
+SUBCOMMAND_DESC="Criar, configurar e iniciar o transervicos em dev"
 SUBCOMMAND_HELP=$(cat <<EOH
 Usage ${MAIN_COMMAND} ${SUBCOMMAND} [init] [start] [stop] [clean_data] [db_migrate] [goto]
 
