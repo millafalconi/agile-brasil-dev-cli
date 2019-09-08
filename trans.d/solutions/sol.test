@@ -5,6 +5,8 @@ SOLUTION_DESC="CLI solution script for 'test'"
 SUBCOMMAND_DESC="Shortcuts to run tests"
 SUBCOMMAND_HELP=$(cat <<EOH
 
+unit          Run all unit tests.
+
 all           Run all application tests. Including
               static analysis.
 
@@ -14,23 +16,30 @@ style         Run static analysis for Ruby
 EOH
 )
 
-function all() {
+function run_all() {
   in_cyan "running all tests for 'transervicos'"
   docker-compose run --rm web bash -c "rubocop && rspec spec"
 }
 
-function style() {
+function run_style() {
   in_cyan "running static analysis in 'transervicos' code"
   docker-compose run --rm web bash -c "rubocop"
+}
+
+function run_unit() {
+  in_cyan "running unit tests for 'transervicos'"
+  docker-compose run --rm web bash -c "rspec spec"
 }
 
 is_help_mode "${@}" && return
 
 case ${1} in
   all)
-    all
+    run_all
     ;;
   style)
-    style
+    run_style
     ;;
+  unit)
+    run_unit
 esac
