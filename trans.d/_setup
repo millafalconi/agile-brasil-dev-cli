@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+# vim: ft=sh
+SUBCOMMAND_DESC="\tFunctions to check and do the setup required for this project"
+
+function check_for() {
+  log "arguments '${*}'"
+  log "checking if '${1}' exists"
+  [[ -x "$(command -v ${1})" ]] && in_yellow "'${1}' found\n\n" || in_red "error: dependency '${1}' not found\n\n"
+}
+
+function _install() {
+  local to_install=${1}
+  log "dependency given '${to_install}'"
+  case $to_install in
+    docker)
+      in_cyan "installing dependency '${to_install}' via apk..."
+      apk add ${to_install}
+      if [[ $? -ne 0 ]]; then
+        error "dependency '${to_install}' not installed"
+      else
+        in_green "dependency '${to_install}' installed"
+      fi
+      ;;
+    *)
+      log "dependency '${to_install}' is not valid"
+      error "could not install dependency '${to_install}'"
+      ;;
+  esac
+}
+
+function _parse() {
+  local choice=${1}
+  case $choice in
+    y|Y)
+      log "choice given '${choice}'"
+      log "you choose to proceed with installation"
+      in_cyan "proceeding with installation"
+      ;;
+    n|N)
+      log "choice given '${choice}'"
+      log "you choose not to proceed with installation"
+      in_cyan "aborting installation"
+      return -1
+      ;;
+    *)
+      log "args: '${*}'"
+      error "'${choice}' not a valid option"
+      exit;;
+  esac
+}
+
+function _proceed() {
+  in_cyan "Proceed to install (Y/N)?"
+  read choice
+  _parse ${choice}
+}
+
+function install_if_missing() {
+  in_cyan "checking if '${1}' is indeed missing"
+  if [[ -x "$(command -v ${1})" ]]; then
+    in_green "'${1}' found. "
+    in_cyan "no further action required. exiting."
+    return
+  fi
+
+  in_red "error: dependency '${1}' not found\n"
+  log "'${1}' not found"
+  in_cyan "'${1}' is required and should be installed.\n\n" && _proceed
+
+  [[ $? != 0 ]] && return || _install ${1}
+}
