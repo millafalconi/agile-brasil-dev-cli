@@ -31,6 +31,8 @@ function _show_all() {
   done | sort
 }
 
+is_help_mode "${@}" && return
+
 case ${1} in
     goto)
         local alias=${2}
