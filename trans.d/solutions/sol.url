@@ -31,30 +31,39 @@ function _show_all() {
   done | sort
 }
 
+function _show_url_for() {
+    local alias=${1}
+    log "Alias given '${alias}'"
+    [[ -z ${alias} ]] && in_red "no alias given" && _show_all && return    
+    
+    [[ -z ${list[${alias}]} ]] && in_red "no URL found for '${alias}'\n\n" && _show_all && return
+    
+    in_cyan "Showing URL for '${alias}'"
+    printf "%-20s %s\n" "ALIAS" "URL"
+    printf "%-20s %s\n" ${alias} ${list[${alias}]}
+}
+
+function _goto() {
+    local alias=${1}
+    log "Alias given '${alias}'"
+    [[ -z ${alias} ]] && in_red "no alias given" && _show_all && return
+    
+    [[ -n ${list[${alias}]} ]] && in_cyan "opening '${list[${alias}]}'..." && open ${list[${alias}]} || _show_all
+}
+
 is_help_mode "${@}" && return
 
 case ${1} in
     goto)
-        local alias=${2}
-        [[ -z ${alias} ]] && in_red "no alias given" && _show_all && return
-        log "Alias given '${2}'"
-        [[ -n ${list[${alias}]} ]] && open ${list[${alias}]} || _show_all
+        _goto ${2}
     ;;
     all)
         _show_all
     ;;
     show)
-        local alias=${2}
-        [[ -z ${alias} ]] && in_red "no alias given" && _show_all && return
-        log "Alias given '${alias}'"
-        log "Showing URL for '${alias}'"
-        [[ -n ${list[${alias}]} ]] && printf "%-20s %s\n" "ALIAS" "URL" && printf "%-20s %s\n" ${alias} ${list[${alias}]} || (in_red "no URL found for '${alias}'" && _show_all)
+        _show_url_for ${2}
     ;;
     *)
-        local alias=${1}
-        [[ -z ${alias} ]] && return
-        log "Alias given '${alias}'"
-        log "Showing URL for '${alias}'"
-        [[ -n ${list[${alias}]} ]] && printf "%-20s %s\n" "ALIAS" "URL" && printf "%-20s %s\n" ${alias} ${list[${alias}]}
+        _show_url_for ${1}
     ;;
 esac
