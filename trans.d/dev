@@ -46,6 +46,10 @@ function db_migrate() {
   error "not implemented."
 }
 
+function checkin_dance() {
+  error "not implemented"
+}
+
 is_help_mode "${@}" && return
 
 case ${1} in
@@ -66,5 +70,8 @@ case ${1} in
     ;;
   goto)
     goto
+    ;;
+  dance)
+    checkin_dance
     ;;
 esac
