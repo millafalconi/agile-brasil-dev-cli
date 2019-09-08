@@ -16,12 +16,12 @@ EOH
 
 function all() {
   in_cyan "running all tests for 'transervicos'"
-  docker-compose run web bash -c "rubocop && rspec spec"
+  docker-compose run --rm web bash -c "rubocop && rspec spec"
 }
 
 function style() {
   in_cyan "running static analysis in 'transervicos' code"
-  docker-compose run web bash -c "rubocop"
+  docker-compose run --rm web bash -c "rubocop"
 }
 
 is_help_mode "${@}" && return
