@@ -98,7 +98,13 @@ function checkin_dance() {
   echo
   in_cyan "STEP 4: Integrate code"
   in_cyan "RUNNING: git push"
+  echo
   git push
+  if [[ $? -eq -1 ]]; then
+    warn "someone else integrated their code before your."
+    error "please start over."
+  fi
+  in_green "all set! checkin dance succeeded!"
 }
 
 is_help_mode "${@}" && return
