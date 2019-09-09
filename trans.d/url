@@ -17,13 +17,22 @@ EOH
 )
 
 declare -A "list"
+list[dev]='http://localhost:3000'
+list[ci]='https://gitlab.com/juuh42dias/transervicos/pipelines'
 
 function _show_all() {
-  error "not implemented"
+    in_cyan "Listing all URLs:"
+    # echo ${list[@]} | xargs -n 1 echo
+    
+    printf "%-20s %s\n" "ALIAS" "URL"
+    for name in "${!list[@]}"; do
+        printf "%-20s %s\n" ${name} ${list[${name}]}
+    done
 }
 
 function _show_url_for() {
-    error "not implemented"
+    local alias=${1}
+    [[ -n "${alias}" ]] && echo ${list[${alias}]} || _show_all
 }
 
 function _goto() {

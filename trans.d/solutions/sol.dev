@@ -37,12 +37,12 @@ function init() {
 }
 
 function stop() {
-  docker-compose stop ${1}
+  docker-compose down
 }
 
 function clean_db_data() {
   stop db
-  docker volume rm transervicos_db_data
+  docker volume rm -f transervicos_db_data
 }
 
 function goto() {
