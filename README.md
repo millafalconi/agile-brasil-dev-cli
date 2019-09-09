@@ -22,8 +22,8 @@ remove the .example from the database.yml.example on the /config folder and then
 
 ### trans dev                      Shortcuts to handle local dev env
 
-#### init                  Init, configure the local dev environment; And start the app.                      
-#### start                 Start transervicos in local dev environment.
+#### `init`                  Init, configure the local dev environment; And start the app.                      
+#### `start`                 Start transervicos in local dev environment.
 #### stop [SERVER]         Stop transervicos in local dev environment. 
 #### clean_data            Clean all data in local dev environment.
 #### db_migrate            Run DB migration.
