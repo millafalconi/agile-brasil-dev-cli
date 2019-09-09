@@ -18,10 +18,10 @@ remove the .example from the database.yml.example on the /config folder and then
 `./trans dev start`
 
 
-###trans cli commands:
+### trans cli commands:
 
-##trans dev                      Shortcuts to handle local dev env                           
-##trans setup                    Shortcuts to handle the project setup                       
-##trans test                     Shortcuts to run tests                                      
-##trans url                      List relevant URLs                                          
+## trans dev                      Shortcuts to handle local dev env                           
+## trans setup                    Shortcuts to handle the project setup                       
+## trans test                     Shortcuts to run tests                                      
+## trans url                      List relevant URLs                                          
 
