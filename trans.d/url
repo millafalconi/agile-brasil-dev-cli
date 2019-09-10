@@ -22,17 +22,17 @@ list[prod]='http://www.transervicos.org/'
 list[ci]='https://gitlab.com/juuh42dias/transervicos/pipelines'
 
 function _show_all() {
-    # you probably would like to loop into the URLs list above and printf each URL in there
+    # tip: you probably would like to loop into the URLs list above and printf each URL in there
     error "not implemented"
 }
 
 function _show_url_for() {
-    # you probably would like to printf a specific URL from that previous list searching by its alias
+    # tip: you probably would like to printf a specific URL from that previous list searching by its alias
     error "not implemented"
 }
 
 function _goto() {
-    # if you type: open 'http://www.google.com.br' on your terminal it will open google on your browser
+    # tip: if you type: open 'http://www.google.com.br' on your terminal it will open google on your browser
     error "not implemented"
 }
 

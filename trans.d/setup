@@ -13,10 +13,12 @@ EOH
 )
 
 function check_setup() {
+  # tip: Here you would like to check if your dependencies are installed before running the application. You are a lucky person, you need to check if docker is installed.
   error "not implemented."
 }
 
 function install_all() {
+  # tip: Here you would like to install all your dependencies. You probably would like to prompt the user if they would like to install the dependency you just searched.
   error "not implemented."
 }
 
