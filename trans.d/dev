@@ -23,31 +23,42 @@ EOH
 )
 
 function start() {
+  # tip: here you probalby would like to start the application using the docker-compose star command
   error "not implemented."
 }
 
 function init() {
-    error "not implemented."
+  # tip: The docker-compose up command builds, (re)creates, starts, and attaches to containers for a service.
+  error "not implemented."
 }
 
 function stop() {
-  docker-compose stop
+  # tip: The docker-compose down command Stops containers and removes containers, networks, volumes, and images created by up
+  error "not implemented."
 }
 
 function clean_db_data() {
+  # tip: The docker volume rm removes a volume, so maybe we can remove the postgres volume?
   error "not implemented."
 }
 
 function goto() {
+  # tip: if you
   error "not implemented."
 }
 
 function db_migrate() {
+  # tip: if you type open http://localhost:3000 will it open the application running on dev environment?
   error "not implemented."
 }
 
 function checkin_dance() {
-error "not implemented."
+  # tip: You want to push new code to your remote, but before that you need to do the dance!
+  # STEP 1: pull code from remote
+  # STEP 2: run all tests
+  # STEP 3: Check the CI server status
+  # STEP 4: Integrate code
+  error "not implemented."
 }
 
 is_help_mode "${@}" && return
