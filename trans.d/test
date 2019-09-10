@@ -17,14 +17,17 @@ EOH
 )
 
 function run_all() {
+  # Run all should run both rubocop and unit tests
   error "not implemented"
 }
 
 function run_rubocop() {
+  #Rubocop is Ruby's static code analyzer and code formatter. To run rubocop, you need to run the following command: "rspec spec"
   error "not implemented"
 }
 
 function run_unit() {
+  #to run the unit tests you need to run the following command: "rspec spec"
   error "not implemented"
 }
 
