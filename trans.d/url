@@ -18,24 +18,21 @@ EOH
 
 declare -A "list"
 list[dev]='http://localhost:3000'
+list[prod]='http://www.transervicos.org/'
 list[ci]='https://gitlab.com/juuh42dias/transervicos/pipelines'
 
 function _show_all() {
-    in_cyan "Listing all URLs:"
-    # echo ${list[@]} | xargs -n 1 echo
-    
-    printf "%-20s %s\n" "ALIAS" "URL"
-    for name in "${!list[@]}"; do
-        printf "%-20s %s\n" ${name} ${list[${name}]}
-    done
+    # you probably would like to loop into the URLs list above and printf each URL in there
+    error "not implemented"
 }
 
 function _show_url_for() {
-    local alias=${1}
-    [[ -n "${alias}" ]] && echo ${list[${alias}]} || _show_all
+    # you probably would like to printf a specific URL from that previous list searching by its alias
+    error "not implemented"
 }
 
 function _goto() {
+    # if you type: open 'http://www.google.com.br' on your terminal it will open google on your browser
     error "not implemented"
 }
 
